@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zet_gestor_orcamento/components/menu_drawer.dart';
-import 'package:zet_gestor_orcamento/data/budget_Inherited.dart';
+import 'package:zet_gestor_orcamento/models/budget.dart';
+
+import '../data/budget_Inherited.dart';
+import '../database/my_database.dart';
 
 class SalaryFormScreen extends StatefulWidget {
   const SalaryFormScreen({Key? key, required this.appContext})
@@ -72,8 +75,10 @@ class _SalaryFormScreenState extends State<SalaryFormScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
+
+                            //MyDatabase().saveBudget(Budget(salary: double.parse(salaryController.text)));
                             BudgetInherited.of(widget.appContext)
                                 .addSalary(double.parse(salaryController.text));
 

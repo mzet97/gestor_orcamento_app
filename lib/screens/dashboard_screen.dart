@@ -12,6 +12,7 @@ class DashBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.refresh))],
         title: Text('Home'),
       ),
       drawer: const MenuDrawer(),
@@ -32,5 +33,3 @@ class DashBoard extends StatelessWidget {
     );
   }
 }
-
-

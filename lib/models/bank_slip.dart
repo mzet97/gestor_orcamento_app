@@ -4,7 +4,9 @@ class BankSlip {
   String? date;
   double? value;
 
-  BankSlip.empty();
+  BankSlip.empty(){
+    id = 0;
+  }
 
   BankSlip(
       {this.id = 0,
@@ -12,22 +14,20 @@ class BankSlip {
       required this.date,
       required this.value});
 
-  BankSlip.formMap(Map map) {
-    id = map['id'];
+  BankSlip.formMap(Map<String, dynamic> map) {
+    id = int.parse(map['id']);
     name = map['name'];
     date = map['date'];
     value = map['value'];
   }
 
-  Map toMap() {
+  Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       name!: name!,
       date!: date!,
       'value': value,
     };
-    if (id != null) {
-      map['id'] = id;
-    }
+    map['id'] = id;
     return map;
   }
 

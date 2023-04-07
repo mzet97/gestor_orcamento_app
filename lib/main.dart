@@ -24,17 +24,17 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (contextNew) => DashBoard(
-                appContext: contextNew,
-              ),
+            appContext: contextNew,
+          ),
           '/salary': (contextNew) => SalaryFormScreen(
-                appContext: contextNew,
-              ),
+            appContext: contextNew,
+          ),
           '/monthly': (contextNew) => MonthlyBudgetFormScreen(
-                appContext: contextNew,
-              ),
+            appContext: contextNew,
+          ),
           '/bank': (contextNew) => BankSlipFormScreen(
-                appContext: contextNew,
-              )
+            appContext: contextNew,
+          )
         },
       ),
     );

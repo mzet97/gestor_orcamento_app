@@ -13,24 +13,29 @@ class BudgetInherited extends InheritedWidget {
   Budget myBudget = Budget(salary: 0,);
   MyDatabase myDatabase = MyDatabase();
 
-  void addSalary(double salary) {
+  Future<void> addSalary(double salary) async {
     myBudget.salary = salary;
     if(myBudget.id != 0){
-      myDatabase.updateBudget(myBudget).then((value) => myBudget = value);
+      myBudget = await myDatabase.updateBudget(myBudget);
     }else{
-      myDatabase.saveBudget(myBudget).then((value) => myBudget = value);
+      myBudget = await myDatabase.saveBudget(myBudget);
     }
   }
 
-  double getSalary(){
-    myDatabase.getBudget().then((value) => myBudget = value);
+  Future<double> getSalary() async {
+    myBudget = await myDatabase.getBudget();
     if(myBudget.salary == null || myBudget.salary! > -1) 0;
     return myBudget.salary!;
   }
 
-  void addMonthlyBudget(MonthlyBudget monthlyBudget){
-    myBudget.monthlyBudget ??= <MonthlyBudget>[];
-    myBudget.monthlyBudget!.add(monthlyBudget);
+  Future<Budget> getBudget() async {
+    myBudget = await myDatabase.getBudget();
+    return myBudget;
+  }
+
+  Future<void> addMonthlyBudget(MonthlyBudget monthlyBudget) async {
+    await myDatabase.saveMonthlyBudget(monthlyBudget);
+    myBudget = await myDatabase.getBudget();
   }
 
   static BudgetInherited of(BuildContext context) {

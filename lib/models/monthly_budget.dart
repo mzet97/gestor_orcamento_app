@@ -7,7 +7,11 @@ class MonthlyBudget {
   List<BankSlip>? bankSilps;
   bool? isExpanded;
 
-  MonthlyBudget.empty();
+  MonthlyBudget.empty(){
+    id = 0;
+    bankSilps = [];
+    isExpanded = false;
+  }
 
   MonthlyBudget({
     required this.month,
@@ -17,21 +21,19 @@ class MonthlyBudget {
     this.id = 0
   });
 
-  MonthlyBudget.formMap(Map map) {
+  MonthlyBudget.formMap(Map<String, dynamic> map) {
     id = map['id'];
     month = map['month'];
     year = map['year'];
     isExpanded = false;
   }
 
-  Map toMap() {
+  Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       month!: month!,
       year!: year!,
     };
-    if (id != null) {
-      map['id'] = id;
-    }
+    map['id'] = id;
     return map;
   }
 

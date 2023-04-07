@@ -5,7 +5,11 @@ class Budget {
   List<MonthlyBudget>? monthlyBudget;
   double? salary;
 
-  Budget.empty();
+  Budget.empty(){
+    id = 0;
+    salary = 0;
+    monthlyBudget = [];
+  }
 
   Budget({
     required this.salary,
@@ -13,23 +17,35 @@ class Budget {
     this.id = 0
   });
 
-  Budget.formMap(Map map) {
+  Budget.formMap(Map<String, dynamic> map) {
     id = map['id'];
-    salary = map['salary'];
+    salary =  map['salary'];
   }
 
-  Map toMap() {
+  Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       'salary': salary,
     };
-    if (id != null) {
-      map['id'] = id;
-    }
+    map['id'] = id;
     return map;
+  }
+
+  double getGasto(){
+    if(monthlyBudget != null){
+      return 1;
+    }
+    return 0;
+  }
+
+  double getPoupado(){
+    if(monthlyBudget != null){
+      return 1;
+    }
+    return 0;
   }
 
   @override
   String toString() {
-    return "Budget(id: $id, name: $salary)";
+    return "Budget(id: $id, salary: $salary)";
   }
 }
