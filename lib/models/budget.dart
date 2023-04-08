@@ -1,5 +1,7 @@
 import 'package:zet_gestor_orcamento/models/monthly_budget.dart';
 
+import 'bank_slip.dart';
+
 class Budget {
   int? id;
   List<MonthlyBudget>? monthlyBudget;
@@ -31,15 +33,25 @@ class Budget {
   }
 
   double getGasto(){
+    double total = 0;
     if(monthlyBudget != null){
-      return 1;
+      for(MonthlyBudget mbItem in monthlyBudget ?? []){
+        for(BankSlip sbItem in mbItem.bankSilps ?? []){
+          total += sbItem.value!;
+        }
+      }
+      return total;
     }
     return 0;
   }
 
   double getPoupado(){
-    if(monthlyBudget != null){
-      return 1;
+    return salary! - getGasto();
+  }
+
+  double getMedia(){
+    if(monthlyBudget != null && monthlyBudget!.isNotEmpty!){
+      return getGasto() / monthlyBudget!.length!;
     }
     return 0;
   }

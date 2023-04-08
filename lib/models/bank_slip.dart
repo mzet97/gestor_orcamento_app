@@ -15,7 +15,7 @@ class BankSlip {
       required this.value});
 
   BankSlip.formMap(Map<String, dynamic> map) {
-    id = int.parse(map['id']);
+    id = map['id'];
     name = map['name'];
     date = map['date'];
     value = map['value'];
@@ -33,6 +33,6 @@ class BankSlip {
 
   @override
   String toString() {
-    return "BankSlip(id: $id, name: $name, date:$date, $value:value)";
+    return "BankSlip(id: $id, name: $name, date:$date, value:$value)";
   }
 }

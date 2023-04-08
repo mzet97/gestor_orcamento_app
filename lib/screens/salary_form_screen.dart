@@ -65,8 +65,10 @@ class _SalaryFormScreenState extends State<SalaryFormScreen> {
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
+                        icon: Icon(Icons.monetization_on_rounded),
                         border: OutlineInputBorder(),
-                        hintText: 'Salario',
+                        hintText: 'Digite o salário',
+                        labelText: "Salario",
                         fillColor: Colors.white70,
                         filled: true,
                       ),

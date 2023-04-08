@@ -256,7 +256,7 @@ class MyDatabase {
     if (monthlyBudget == null) return null;
 
     Database dbBudget = await db;
-    dbBudget.batch().rawInsert(
+    dbBudget.rawInsert(
         'INSERT INTO bank_slip(name, date, value, id_monthly_budget) VALUES(?,?,?,?);',
         [bankSlip.name, bankSlip.date, bankSlip.value, idMonthlyBudget]);
 
@@ -313,7 +313,7 @@ class MyDatabase {
         var bankSlip = BankSlip.formMap(map);
         listBankSlip.add(bankSlip);
 
-        print('$bankSlip');
+        print('_db:$bankSlip');
       }
     }
 

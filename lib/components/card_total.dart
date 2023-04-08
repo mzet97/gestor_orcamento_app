@@ -24,7 +24,7 @@ class _CardTotalState extends State<CardTotal> {
         color: Colors.blue[200],
         borderRadius: BorderRadius.circular(4),
       ),
-      height: 140,
+      height: 160,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: FutureBuilder(
@@ -65,7 +65,12 @@ class _CardTotalState extends State<CardTotal> {
                               fontSize: 30, overflow: TextOverflow.ellipsis),
                         ),
                         Text(
-                          'Poupado: ${budget?.getPoupado()}',
+                          'Sobrou: ${budget?.getPoupado()}',
+                          style: const TextStyle(
+                              fontSize: 30, overflow: TextOverflow.ellipsis),
+                        ),
+                        Text(
+                          'Media de gasto: ${budget?.getMedia()}',
                           style: const TextStyle(
                               fontSize: 30, overflow: TextOverflow.ellipsis),
                         )

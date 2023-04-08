@@ -23,6 +23,7 @@ class _MonthlyBudgetFormScreenState extends State<MonthlyBudgetFormScreen> {
 
   final List<String> months = <String>[
     'Janeiro',
+    'Fevereiro',
     'Março',
     'Abril',
     'Maio',
@@ -37,7 +38,7 @@ class _MonthlyBudgetFormScreenState extends State<MonthlyBudgetFormScreen> {
 
   String dropdownValue = 'Janeiro';
 
-  bool monthValidator(String? value) {
+  bool yearValidator(String? value) {
     if (value != null && value.isEmpty) {
       if (int.parse(value) > 2000 && int.parse(value) < 3000) {
         return true;
@@ -72,7 +73,7 @@ class _MonthlyBudgetFormScreenState extends State<MonthlyBudgetFormScreen> {
                     padding: const EdgeInsets.all(10.0),
                     child: TextFormField(
                       validator: (String? value) {
-                        if (monthValidator(value)) {
+                        if (yearValidator(value)) {
                           return 'Deve insrir um ano valido';
                         }
                         return null;
@@ -81,39 +82,53 @@ class _MonthlyBudgetFormScreenState extends State<MonthlyBudgetFormScreen> {
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
+                        icon: Icon(Icons.calendar_month_outlined),
                         border: OutlineInputBorder(),
-                        hintText: 'Ano',
+                        hintText: 'Digite o ano',
+                        labelText: 'Ano',
                         fillColor: Colors.white70,
                         filled: true,
                       ),
                     ),
                   ),
-                  DropdownButton<String>(
-                    dropdownColor: Colors.blue[200],
-                    value: dropdownValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    elevation: 10,
-                    style: const TextStyle(color: Colors.black),
-                    underline: Container(
-                      height: 1,
-                      color: Colors.blue,
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.white70,
                     ),
-                    onChanged: (String? value) {
-                      setState(() {
-                        dropdownValue = value!;
-                      });
-                    },
-                    items: months
-                        .map((String item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 22,
-                              ),
-                            )))
-                        .toList(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DropdownButton<String>(
+                        dropdownColor: Colors.greenAccent[200],
+                        value: dropdownValue,
+                        underline: Container(),
+                        borderRadius: BorderRadius.circular(12),
+                        icon: const Icon(Icons.arrow_circle_down_sharp),
+                        elevation: 10,
+                        style: const TextStyle(
+                            color: Colors.black,
+                            decoration: TextDecoration.underline),
+                        onChanged: (String? value) {
+                          setState(() {
+                            dropdownValue = value!;
+                          });
+                        },
+                        items: months
+                            .map((String item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 22,
+                                  ),
+                                )))
+                            .toList(),
+                      ),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -134,7 +149,7 @@ class _MonthlyBudgetFormScreenState extends State<MonthlyBudgetFormScreen> {
                           }
                         },
                         child: const Text(
-                          'Adicionar!',
+                          'Adicionar',
                           style: TextStyle(fontSize: 22),
                         )),
                   ),
