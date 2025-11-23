@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zet_gestor_orcamento/components/menu_header.dart';
+import 'package:zet_gestor_orcamento/screens/monthly_budget_form_Screen.dart';
+import 'package:zet_gestor_orcamento/screens/expense_form_screen.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({
@@ -24,14 +26,20 @@ class MenuDrawer extends StatelessWidget {
             leading: const Icon(Icons.calendar_month),
             title: const Text('Novo gasto mensal'),
             onTap: () {
-              Navigator.pushNamed(context, '/monthly');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const MonthlyBudgetFormScreen()),
+              );
             },
           ),
           ListTile(
             leading: const Icon(Icons.money),
             title: const Text('Nova conta'),
             onTap: () {
-              Navigator.pushNamed(context, '/bank');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => ExpenseFormScreen(appContext: context)),
+              );
             },
           ),
           ListTile(

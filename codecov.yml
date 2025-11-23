@@ -1,0 +1,81 @@
+codecov:
+  require_ci_to_pass: yes
+  notify:
+    wait_for_ci: yes
+
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+
+  status:
+    project:
+      default:
+        target: 80%
+        threshold: 5%
+        base: auto
+        flags:
+          - unittests
+        paths:
+          - "lib"
+        if_ci_failed: error
+        informational: false
+        only_pulls: false
+
+    patch:
+      default:
+        target: 70%
+        threshold: 5%
+        base: auto
+        if_ci_failed: error
+        informational: false
+        only_pulls: false
+
+    changes: no
+
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
+
+comment:
+  layout: "reach,diff,flags,files,footer"
+  behavior: default
+  require_changes: no
+  require_base: no
+  require_head: yes
+  branches: null
+  show_carryforward_flags: false
+
+flags:
+  unittests:
+    carryforward: true
+    paths:
+      - lib/
+      - test/
+
+  integration:
+    carryforward: true
+    paths:
+      - integration_test/
+
+ignore:
+  - "lib/generated/"
+  - "lib/l10n/"
+  - "lib/firebase_options.dart"
+  - "lib/main.dart"
+  - "**/*.g.dart"
+  - "**/*.freezed.dart"
+  - "**/*.gr.dart"
+  - "test/"
+  - "integration_test/"
+  - "scripts/"
+  - "android/"
+  - "ios/"
+  - "web/"
+  - "macos/"
+  - "windows/"
+  - "linux/"

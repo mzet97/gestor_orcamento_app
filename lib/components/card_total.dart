@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-
-import '../data/budget_Inherited.dart';
-import '../database/my_database.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zet_gestor_orcamento/bloc/budget/budget_bloc.dart';
+import 'package:zet_gestor_orcamento/bloc/budget/budget_event.dart';
+import 'package:zet_gestor_orcamento/bloc/budget/budget_state.dart';
+import 'package:zet_gestor_orcamento/models/budget.dart';
 
 class CardTotal extends StatefulWidget {
   final BuildContext appContext;
@@ -27,61 +29,71 @@ class _CardTotalState extends State<CardTotal> {
       height: 160,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: FutureBuilder(
-            future: BudgetInherited.of(widget.appContext).getBudget(),
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                  break;
-                case ConnectionState.waiting:
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                  break;
-                case ConnectionState.active:
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                  break;
-                case ConnectionState.done:
-                  var budget = snapshot.data;
-                  print('budget: $budget');
-                  if (budget != null) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Saldo: ${budget?.salary}',
-                          style: const TextStyle(
-                              fontSize: 30, overflow: TextOverflow.ellipsis),
-                        ),
-                        Text(
-                          'Gasto: ${budget?.getGasto()}',
-                          style: const TextStyle(
-                              fontSize: 30, overflow: TextOverflow.ellipsis),
-                        ),
-                        Text(
-                          'Sobrou: ${budget?.getPoupado()}',
-                          style: const TextStyle(
-                              fontSize: 30, overflow: TextOverflow.ellipsis),
-                        ),
-                        Text(
-                          'Media de gasto: ${budget?.getMedia()}',
-                          style: const TextStyle(
-                              fontSize: 30, overflow: TextOverflow.ellipsis),
-                        )
-                      ],
-                    );
+        child: BlocBuilder<BudgetBloc, BudgetState>(
+          builder: (context, budgetState) {
+            if (budgetState is BudgetInitial) {
+              context.read<BudgetBloc>().add(const LoadBudget());
+              return const Center(child: CircularProgressIndicator());
+            }
+            
+            if (budgetState is BudgetLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            
+            if (budgetState is BudgetError) {
+              return Center(child: Text('Erro: ${budgetState.message}'));
+            }
+            
+            if (budgetState is BudgetLoaded) {
+              final budget = budgetState.budget;
+              
+              if (budget != null) {
+                // Calcula saldo: receitas (valores negativos) + salário - despesas (valores positivos)
+                final allSlips = budget.getAllBankSlips();
+                double totalIncome = 0;
+                double totalExpenses = 0;
+                for (final s in allSlips) {
+                  final v = s.value ?? 0;
+                  if (v < 0) {
+                    totalIncome += v.abs();
+                  } else {
+                    totalExpenses += v;
                   }
-                  return const Text('Não há dados cadastrados');
-                  break;
+                }
+                final saldo = (budget.salary ?? 0) + totalIncome - totalExpenses;
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Saldo: ${saldo}',
+                      style: const TextStyle(
+                          fontSize: 30, overflow: TextOverflow.ellipsis),
+                    ),
+                    Text(
+                      'Gasto: ${budget.getGasto()}',
+                      style: const TextStyle(
+                          fontSize: 30, overflow: TextOverflow.ellipsis),
+                    ),
+                    Text(
+                      'Sobrou: ${budget.getPoupado()}',
+                      style: const TextStyle(
+                          fontSize: 30, overflow: TextOverflow.ellipsis),
+                    ),
+                    Text(
+                      'Media de gasto: ${budget.getMedia()}',
+                      style: const TextStyle(
+                          fontSize: 30, overflow: TextOverflow.ellipsis),
+                    )
+                  ],
+                );
               }
-              return Text('Erro');
-            }),
+              return const Text('Não há dados cadastrados');
+            }
+            
+            return const Text('Estado desconhecido');
+          },
+        ),
       ),
     );
   }

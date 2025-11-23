@@ -37,7 +37,10 @@ class Budget {
     if(monthlyBudget != null){
       for(MonthlyBudget mbItem in monthlyBudget ?? []){
         for(BankSlip sbItem in mbItem.bankSilps ?? []){
-          total += sbItem.value!;
+          final v = sbItem.value ?? 0;
+          if (v > 0) {
+            total += v;
+          }
         }
       }
       return total;
@@ -54,6 +57,18 @@ class Budget {
       return getGasto() / monthlyBudget!.length!;
     }
     return 0;
+  }
+
+  List<BankSlip> getAllBankSlips() {
+    List<BankSlip> allBankSlips = [];
+    if (monthlyBudget != null) {
+      for (MonthlyBudget mb in monthlyBudget!) {
+        if (mb.bankSilps != null) {
+          allBankSlips.addAll(mb.bankSilps!);
+        }
+      }
+    }
+    return allBankSlips;
   }
 
   @override

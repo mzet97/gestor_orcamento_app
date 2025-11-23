@@ -1,0 +1,27 @@
+{
+  "@@locale": "en",
+  "tabHome": "Home",
+  "tabTransactions": "Transactions",
+  "tabCategories": "Categories",
+  "tabReports": "Reports",
+  "tabSettings": "Settings",
+
+  "settingsTitle": "Settings",
+  "exportData": "Export data",
+  "exportDataSubtitle": "Back up your data",
+  "preferences": "Preferences",
+  "about": "About",
+  "salaryMonthly": "Monthly salary",
+  "updateSalary": "Update your salary",
+  "currency": "Currency",
+  "dateFormat": "Date format",
+  "language": "Language",
+  "appVersion": "App version",
+  "termsOfUse": "Terms of use",
+  "readTerms": "Read terms and conditions",
+
+  "exportDialogTitle": "Export Data",
+  "exportDialogContent": "Generate an Excel file with your data.",
+  "exportExcelButton": "Export Excel",
+  "cancel": "Cancel"
+}

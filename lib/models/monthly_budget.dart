@@ -21,6 +21,12 @@ class MonthlyBudget {
     this.id = 0
   });
 
+  MonthlyBudget.withId({required int id}) {
+    this.id = id;
+    isExpanded = false;
+    bankSilps = [];
+  }
+
   MonthlyBudget.formMap(Map<String, dynamic> map) {
     id = map['id'];
     month = map['month'];
@@ -28,13 +34,40 @@ class MonthlyBudget {
     isExpanded = false;
   }
 
+  // Corrigir serialização para Map com chaves estáticas
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = {
-      month!: month!,
-      year!: year!,
+    return {
+      'id': id,
+      'month': month,
+      'year': year,
     };
-    map['id'] = id;
-    return map;
+  }
+
+  // Adicionar fromMap compatível com o repositório
+  factory MonthlyBudget.fromMap(Map<String, dynamic> map) {
+    return MonthlyBudget(
+      id: map['id'] ?? 0,
+      month: map['month'],
+      year: map['year'],
+      isExpanded: false,
+    );
+  }
+
+  // Adicionar copyWith usado pelo repositório (ex.: gerar novo id)
+  MonthlyBudget copyWith({
+    int? id,
+    String? month,
+    String? year,
+    List<BankSlip>? bankSilps,
+    bool? isExpanded,
+  }) {
+    return MonthlyBudget(
+      id: id ?? this.id,
+      month: month ?? this.month,
+      year: year ?? this.year,
+      bankSilps: bankSilps ?? this.bankSilps,
+      isExpanded: isExpanded ?? this.isExpanded,
+    );
   }
 
   void adicionarConta(BankSlip bankSlip){

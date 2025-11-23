@@ -1,103 +1,159 @@
-import 'package:flutter/material.dart';
-import 'package:zet_gestor_orcamento/components/menu_drawer.dart';
-import 'package:zet_gestor_orcamento/models/budget.dart';
+import 'dart:developer';
 
-import '../data/budget_Inherited.dart';
-import '../database/my_database.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zet_gestor_orcamento/bloc/budget/budget_bloc.dart';
+import 'package:zet_gestor_orcamento/bloc/budget/budget_event.dart';
+import 'package:zet_gestor_orcamento/bloc/budget/budget_state.dart';
+import 'package:zet_gestor_orcamento/components/base_components.dart';
 
 class SalaryFormScreen extends StatefulWidget {
-  const SalaryFormScreen({Key? key, required this.appContext})
-      : super(key: key);
+  const SalaryFormScreen({super.key});
 
-  final BuildContext appContext;
   @override
   State<SalaryFormScreen> createState() => _SalaryFormScreenState();
 }
 
 class _SalaryFormScreenState extends State<SalaryFormScreen> {
-  TextEditingController salaryController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _salaryController = TextEditingController();
+  bool _isLoading = false;
 
-  bool salaryValidator(String? value) {
-    if (value != null && value.isEmpty) {
-      if (double.parse(value) > 0) {
-        return true;
-      }
+  @override
+  void initState() {
+    super.initState();
+    // Pré-preencher com salário atual, se disponível
+    final state = context.read<BudgetBloc>().state;
+    if (state is BudgetLoaded) {
+      final current = state.budget.salary ?? 0.0;
+      _salaryController.text = _formatCurrencyInput(current);
     }
+  }
 
-    return false;
+  @override
+  void dispose() {
+    _salaryController.dispose();
+    super.dispose();
+  }
+
+  String _formatCurrencyInput(double value) {
+    // Formatação simples com duas casas decimais e separador decimal vírgula
+    return value.toStringAsFixed(2).replaceAll('.', ',');
+  }
+
+  double _parseCurrency(String raw) {
+    // Aceita valores com vírgula ou ponto como separador decimal
+    final normalized = raw.trim().replaceAll('.', '').replaceAll(',', '.');
+    return double.tryParse(normalized) ?? 0.0;
+  }
+
+  String? _salaryValidator(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Informe o valor do salário';
+    }
+    final parsed = _parseCurrency(value);
+    if (parsed <= 0) {
+      return 'Salário deve ser maior que 0';
+    }
+    return null;
+  }
+
+  Future<void> _submit() async {
+    if (_isLoading) return;
+    FocusScope.of(context).unfocus();
+
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _isLoading = true);
+    final salary = _parseCurrency(_salaryController.text);
+
+    try {
+      log('Atualizando salário: $salary');
+      context.read<BudgetBloc>().add(AddSalary(salary));
+
+      if (!mounted) return;
+      ModernSnackBar.show(
+        context: context,
+        message: 'Salário atualizado',
+        icon: Icons.check_circle_outline,
+      );
+      Navigator.pop(context, true);
+    } catch (e) {
+      if (mounted) {
+        final theme = Theme.of(context);
+        ModernSnackBar.show(
+          context: context,
+          message: 'Erro ao salvar salário: $e',
+          icon: Icons.error_outline,
+          backgroundColor: theme.colorScheme.errorContainer,
+          textColor: theme.colorScheme.onErrorContainer,
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Meus Dados'),
-        ),
-        drawer: const MenuDrawer(),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: Container(
-              height: 200,
-              width: 375,
-              decoration: BoxDecoration(
-                  color: Colors.blue[100],
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(width: 3)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      validator: (String? value) {
-                        if (salaryValidator(value)) {
-                          return 'Deve inseir um número maior que 0';
-                        }
-                        return null;
-                      },
-                      controller: salaryController,
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      decoration: const InputDecoration(
-                        icon: Icon(Icons.monetization_on_rounded),
-                        border: OutlineInputBorder(),
-                        hintText: 'Digite o salário',
-                        labelText: "Salario",
-                        fillColor: Colors.white70,
-                        filled: true,
+    return Scaffold(
+      appBar: ModernAppBar(title: 'Salário mensal'),
+      body: SingleChildScrollView(
+        child: ResponsiveContainer(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ModernCard(
+                  hasShadow: true,
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      ModernTextField(
+                        label: 'Valor do salário',
+                        hintText: 'Ex: 5.000,00',
+                        controller: _salaryController,
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        prefixIcon: Icons.payments_outlined,
+                        validator: _salaryValidator,
+                        textInputAction: TextInputAction.done,
                       ),
-                    ),
+                      const SizedBox(height: 24),
+                      _buildActionButtons(context),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-
-                            //MyDatabase().saveBudget(Budget(salary: double.parse(salaryController.text)));
-                            BudgetInherited.of(widget.appContext)
-                                .addSalary(double.parse(salaryController.text));
-
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Atualizado seu salario')));
-                            Navigator.popAndPushNamed(context, '/');
-                          }
-                        },
-                        child: const Text('Adicionar!')),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildActionButtons(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: ModernSecondaryButton(
+            text: 'Cancelar',
+            icon: Icons.close_rounded,
+            onPressed: () => Navigator.pop(context),
+            isDisabled: _isLoading,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: ModernPrimaryButton(
+            text: 'Salvar',
+            icon: Icons.check_circle_outline,
+            onPressed: _submit,
+            isLoading: _isLoading,
+            isDisabled: _isLoading,
+          ),
+        ),
+      ],
     );
   }
 }

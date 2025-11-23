@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mzet1997.zet_gestor_orcamento">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
    <application
         android:label="Gestor orçamento"
         android:name="${applicationName}"

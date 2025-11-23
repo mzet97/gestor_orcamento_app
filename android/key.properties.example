@@ -1,0 +1,11 @@
+## Exemplo de configuração da keystore de upload
+# Copie este arquivo para key.properties e preencha com seus segredos.
+# Não faça commit do arquivo key.properties no repositório público.
+
+# Caminho relativo ao diretório android/
+storeFile=app/upload-keystore.jks
+
+# Senhas e alias
+storePassword=COLOQUE_A_SENHA_DA_LOJA_AQUI
+keyAlias=upload
+keyPassword=COLOQUE_A_SENHA_DA_CHAVE_AQUI

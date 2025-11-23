@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:zet_gestor_orcamento/models/bank_slip.dart';
 import 'package:zet_gestor_orcamento/models/budget.dart';
+import 'package:zet_gestor_orcamento/models/category.dart';
 import 'package:zet_gestor_orcamento/models/monthly_budget.dart';
 
 Future<Database> getDatabase() async {
@@ -38,14 +40,36 @@ class MyDatabase {
     final databasesPath = await getDatabasesPath();
     final path = join(databasesPath, "zet_gestor_o.db");
 
-    return await openDatabase(path, version: 5,
+    return await openDatabase(path, version: 7,
         onCreate: (Database db, int newerVersion) async {
       await db.execute(
           'CREATE TABLE IF NOT EXISTS budget (id INTEGER PRIMARY KEY AUTOINCREMENT, salary REAL NOT NULL);');
       await db.execute(
           'CREATE TABLE IF NOT EXISTS monthly_budget (id INTEGER PRIMARY KEY AUTOINCREMENT, month TEXT NOT NULL, year TEXT NOT NULL, id_budget INT NOT NULL, FOREIGN KEY(id_budget) REFERENCES budget(id));');
       await db.execute(
-          'CREATE TABLE IF NOT EXISTS bank_slip (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, date TEXT NOT NULL, value REAL NOT NULL, id_monthly_budget INT NOT NULL, FOREIGN KEY(id_monthly_budget) REFERENCES monthly_budget(id));');
+          'CREATE TABLE IF NOT EXISTS bank_slip (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, date TEXT NOT NULL, value REAL NOT NULL, id_monthly_budget INT NOT NULL, category_id INTEGER, description TEXT, tags TEXT, FOREIGN KEY(id_monthly_budget) REFERENCES monthly_budget(id));');
+      await db.execute(
+          'CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, description TEXT, color TEXT, icon TEXT, budget_limit REAL, created_at TEXT);');
+      await db.execute(
+          'CREATE TABLE IF NOT EXISTS app_settings (key TEXT PRIMARY KEY, value TEXT);');
+    }, onUpgrade: (Database db, int oldVersion, int newVersion) async {
+      if (oldVersion < 6) {
+        await db.execute(
+            'ALTER TABLE bank_slip ADD COLUMN category_id INTEGER;');
+        await db.execute(
+            'ALTER TABLE bank_slip ADD COLUMN description TEXT;');
+        await db.execute(
+            'ALTER TABLE bank_slip ADD COLUMN tags TEXT;');
+        await db.execute(
+            'CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, description TEXT, color TEXT, icon TEXT, budget_limit REAL, created_at TEXT);');
+        
+        // Criar categorias padrão
+        await _insertDefaultCategories(db);
+      }
+      if (oldVersion < 7) {
+        await db.execute(
+            'CREATE TABLE IF NOT EXISTS app_settings (key TEXT PRIMARY KEY, value TEXT);');
+      }
     });
   }
 
@@ -191,7 +215,7 @@ class MyDatabase {
 
     Database dbBudget = await db;
     var listBudget =
-        await dbBudget.rawQuery('SELECT * FROM monthly_budget WHERE $id;');
+        await dbBudget.rawQuery('SELECT * FROM monthly_budget WHERE id = $id;');
 
     if (listBudget != null && listBudget.isNotEmpty) {
       for (var map in listBudget) {
@@ -343,6 +367,97 @@ class MyDatabase {
     Database dbBudget = await db;
     dbBudget
         .rawDelete('DELETE FROM bank_slip WHERE id = ?', [bankSlip.id]);
+  }
+
+  // Funções de Categoria
+  Future<void> _insertDefaultCategories(Database db) async {
+    final defaultCategories = [
+      Category(name: 'Alimentação', description: 'Gastos com supermercado e restaurantes', color: const Color(0xFFFF6B6B), icon: Icons.restaurant, budgetLimit: 500),
+      Category(name: 'Transporte', description: 'Combustível, transporte público, etc.', color: const Color(0xFF4ECDC4), icon: Icons.directions_car, budgetLimit: 300),
+      Category(name: 'Moradia', description: 'Aluguel, condomínio, contas', color: const Color(0xFF45B7D1), icon: Icons.home, budgetLimit: 1200),
+      Category(name: 'Lazer', description: 'Cinema, viagens, hobbies', color: const Color(0xFFF7DC6F), icon: Icons.movie, budgetLimit: 200),
+      Category(name: 'Saúde', description: 'Consultas, medicamentos', color: const Color(0xFFBB8FCE), icon: Icons.medical_services, budgetLimit: 150),
+      Category(name: 'Educação', description: 'Cursos, livros, material escolar', color: const Color(0xFF85C1E2), icon: Icons.school, budgetLimit: 100),
+      Category(name: 'Outros', description: 'Gastos diversos', color: const Color(0xFFF8C471), icon: Icons.more_horiz, budgetLimit: 100),
+    ];
+
+    for (final category in defaultCategories) {
+      await db.rawInsert(
+        'INSERT INTO category(name, description, color, icon, budget_limit, created_at) VALUES(?,?,?,?,?,?);',
+        [
+          category.name,
+          category.description,
+          category.color,
+          category.icon,
+          category.budgetLimit,
+          DateTime.now().toIso8601String(),
+        ],
+      );
+    }
+  }
+
+  Future<List<Category>> getCategories() async {
+    List<Category> categories = [];
+    Database dbBudget = await db;
+    
+    var result = await dbBudget.rawQuery('SELECT * FROM category ORDER BY name;');
+    
+    if (result.isNotEmpty) {
+      categories = result.map((map) => Category.fromMap(map)).toList();
+    }
+    
+    return categories;
+  }
+
+  Future<Category?> saveCategory(Category category) async {
+    Database dbBudget = await db;
+    
+    try {
+      int id = await dbBudget.rawInsert(
+        'INSERT INTO category(name, description, color, icon, budget_limit, created_at) VALUES(?,?,?,?,?,?);',
+        [
+          category.name,
+          category.description,
+          category.color,
+          category.icon,
+          category.budgetLimit,
+          DateTime.now().toIso8601String(),
+        ],
+      );
+      
+      return category.copyWith(id: id);
+    } catch (e) {
+      print('Erro ao salvar categoria: $e');
+      return null;
+    }
+  }
+
+  Future<Category?> updateCategory(Category category) async {
+    Database dbBudget = await db;
+    
+    try {
+      await dbBudget.rawUpdate(
+        'UPDATE category SET name = ?, description = ?, color = ?, icon = ?, budget_limit = ? WHERE id = ?',
+        [
+          category.name,
+          category.description,
+          category.color,
+          category.icon,
+          category.budgetLimit,
+          category.id,
+        ],
+      );
+      
+      return category;
+    } catch (e) {
+      print('Erro ao atualizar categoria: $e');
+      return null;
+    }
+  }
+
+  Future<void> deleteCategory(int id) async {
+    Database dbBudget = await db;
+    await dbBudget.rawDelete('DELETE FROM category WHERE id = ?', [id]);
   }
 
   Future close() async {

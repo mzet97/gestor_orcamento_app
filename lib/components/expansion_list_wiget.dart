@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zet_gestor_orcamento/bloc/budget/budget_bloc.dart';
+import 'package:zet_gestor_orcamento/bloc/budget/budget_event.dart';
+import 'package:zet_gestor_orcamento/bloc/budget/budget_state.dart';
+import 'package:zet_gestor_orcamento/models/budget.dart';
 import 'package:zet_gestor_orcamento/models/bank_slip.dart';
 import 'package:zet_gestor_orcamento/models/monthly_budget.dart';
-
-import '../data/budget_Inherited.dart';
 
 class ExpansionListWiget extends StatefulWidget {
   final BuildContext appContext;
@@ -25,40 +28,37 @@ class _ExpansionListWigetState extends State<ExpansionListWiget> {
   }
 
   Widget _buildPanel() {
-    return FutureBuilder(
-        future: BudgetInherited.of(widget.appContext).getBudget(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-              break;
-            case ConnectionState.waiting:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-              break;
-            case ConnectionState.active:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-              break;
-            case ConnectionState.done:
-              var budget = snapshot.data;
-              return ExpansionPanelList(
-                expansionCallback: (int index, bool isExpanded) {
-                  setState(() {
-                    // budget?.monthlyBudget?[index].isExpanded = !isExpanded;
-                    // print(isExpanded);
-                  });
-                },
-                children: getMonthlyBudgetWidget(budget?.monthlyBudget),
-              );
-              break;
-          }
-          return const Text('Não há dados cadastrados');
-        });
+    return BlocBuilder<BudgetBloc, BudgetState>(
+      builder: (context, budgetState) {
+        if (budgetState is BudgetInitial) {
+          context.read<BudgetBloc>().add(const LoadBudget());
+          return const Center(child: CircularProgressIndicator());
+        }
+        
+        if (budgetState is BudgetLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        
+        if (budgetState is BudgetError) {
+          return Center(child: Text('Erro: ${budgetState.message}'));
+        }
+        
+        if (budgetState is BudgetLoaded) {
+          final budget = budgetState.budget;
+          return ExpansionPanelList(
+            expansionCallback: (int index, bool isExpanded) {
+              setState(() {
+                // budget?.monthlyBudget?[index].isExpanded = !isExpanded;
+                // print(isExpanded);
+              });
+            },
+            children: getMonthlyBudgetWidget(budget?.monthlyBudget),
+          );
+        }
+        
+        return const Text('Estado desconhecido');
+      },
+    );
   }
 
   List<ExpansionPanel> getMonthlyBudgetWidget(List<MonthlyBudget>? list) {
@@ -73,7 +73,7 @@ class _ExpansionListWigetState extends State<ExpansionListWiget> {
             return ListTile(
               onLongPress: (){
                 setState(() {
-                  BudgetInherited.of(widget.appContext).removeMonthlyBudget(monthlyBudget);
+                  context.read<BudgetBloc>().add(RemoveMonthlyBudget(monthlyBudget));
                 });
               },
               title: Text('Ano: ${monthlyBudget.year} | Mês: ${monthlyBudget.month} | Total:${monthlyBudget.obterTotal()}'),
@@ -107,7 +107,7 @@ class _ExpansionListWigetState extends State<ExpansionListWiget> {
               trailing: const Icon(Icons.delete),
               onTap: () {
                 setState(() {
-                  BudgetInherited.of(widget.appContext).removeBankSlip(bankSlip);
+                  context.read<BudgetBloc>().add(RemoveBankSlip(bankSlip));
                 });
               }),
         ));
