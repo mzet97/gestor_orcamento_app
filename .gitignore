@@ -320,10 +320,12 @@ LinkedList*.txt
 flutter_*.txt
 
 # Custom - Security and signing files
-android/app/key.properties
-android/app/upload-keystore.jks
-android/app/*.keystore
-android/app/*.jks
+android/key.properties
+android/*.jks
+android/*.keystore
+android/*.der
+android/*password.txt
+android/*info.txt
 
 # Release artifacts
 release_*/

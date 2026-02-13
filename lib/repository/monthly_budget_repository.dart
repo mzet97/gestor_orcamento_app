@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zet_gestor_orcamento/database/isar_database.dart';
-import 'package:zet_gestor_orcamento/models/monthly_budget.dart';
+import 'package:zeitune_gestor/database/isar_database.dart';
+import 'package:zeitune_gestor/models/monthly_budget.dart';
 
 class MonthlyBudgetRepository {
   static const String _prefsKeyMonthlyBudgets = 'monthly_budgets';

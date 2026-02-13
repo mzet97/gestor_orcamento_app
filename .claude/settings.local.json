@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter:*)",
+      "Bash(yes:*)",
+      "Bash(cp upload_cert.der android/)",
+      "Bash(cp:*)",
+      "Bash(keytool:*)",
+      "Bash(find:*)",
+      "Bash(xargs:*)",
+      "Bash(./build_release.sh:*)",
+      "Bash(./build_release_patched.sh:*)",
+      "Bash(git checkout:*)",
+      "Bash(for pass in 123456 password android upload senha)",
+      "Bash(do:*)",
+      "Bash(then echo '✅ SUCESSO! Senha: $pass' keytool -list -v -keystore android/app/my-key.jks -alias mykey -storepass $pass)",
+      "Bash(for:*)",
+      "Bash(then:*)",
+      "Bash(./build_signed_apk.sh:*)",
+      "Bash(jarsigner:*)",
+      "Bash(mkdir:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

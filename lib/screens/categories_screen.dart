@@ -1,9 +1,9 @@
 // categories_screen.dart - Tela de categorias
 import 'package:flutter/material.dart';
-import 'package:zet_gestor_orcamento/components/base_components.dart';
-import 'package:zet_gestor_orcamento/models/category.dart';
-import 'package:zet_gestor_orcamento/models/bank_slip.dart';
-import 'package:zet_gestor_orcamento/repository/bank_slip_repository.dart';
+import 'package:zeitune_gestor/components/base_components.dart';
+import 'package:zeitune_gestor/models/category.dart';
+import 'package:zeitune_gestor/models/bank_slip.dart';
+import 'package:zeitune_gestor/repository/bank_slip_repository.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});

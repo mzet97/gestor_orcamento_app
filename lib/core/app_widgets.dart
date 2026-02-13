@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zet_gestor_orcamento/core/app_theme.dart';
+import 'package:zeitune_gestor/core/app_theme.dart';
 
 class AppButton extends StatelessWidget {
   final String text;

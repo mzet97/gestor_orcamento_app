@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:zet_gestor_orcamento/models/budget.dart';
+import 'package:zeitune_gestor/models/budget.dart';
 
 abstract class BudgetState extends Equatable {
   const BudgetState();

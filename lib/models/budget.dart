@@ -1,4 +1,4 @@
-import 'package:zet_gestor_orcamento/models/monthly_budget.dart';
+import 'package:zeitune_gestor/models/monthly_budget.dart';
 
 import 'bank_slip.dart';
 

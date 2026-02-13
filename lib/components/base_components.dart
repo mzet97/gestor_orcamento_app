@@ -1,7 +1,7 @@
 // base_components.dart - Componentes base reutilizáveis
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zet_gestor_orcamento/core/app_theme.dart';
+import 'package:zeitune_gestor/core/app_theme.dart';
 
 // Card moderno com estilo consistente
 class ModernCard extends StatelessWidget {

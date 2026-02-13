@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:zet_gestor_orcamento/screens/modern_dashboard.dart';
-import 'package:zet_gestor_orcamento/screens/transactions_screen.dart';
-import 'package:zet_gestor_orcamento/screens/categories_screen.dart';
-import 'package:zet_gestor_orcamento/screens/reports_screen.dart';
-import 'package:zet_gestor_orcamento/screens/settings_screen.dart';
-import 'package:zet_gestor_orcamento/l10n/app_localizations.dart';
+import 'package:zeitune_gestor/screens/modern_dashboard.dart';
+import 'package:zeitune_gestor/screens/transactions_screen.dart';
+import 'package:zeitune_gestor/screens/categories_screen.dart';
+import 'package:zeitune_gestor/screens/reports_screen.dart';
+import 'package:zeitune_gestor/screens/settings_screen.dart';
+import 'package:zeitune_gestor/l10n/app_localizations.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});

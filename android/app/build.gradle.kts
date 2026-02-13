@@ -8,7 +8,7 @@ plugins {
 }
 
 // Load signing properties (keystore) from android/key.properties if present
-val keystorePropertiesFile = rootProject.file("android/key.properties")
+val keystorePropertiesFile = rootProject.file("key.properties")
 val keystoreProperties = Properties()
 if (keystorePropertiesFile.exists()) {
     keystorePropertiesFile.inputStream().use { stream ->
@@ -17,9 +17,10 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.example.zet_gestor_orcamento"
+    namespace = "br.zet.gestororcamento"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    // 16KB page size support - NDK r28 or higher required
+    ndkVersion = "28.0.12433566"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -31,15 +32,27 @@ android {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+        // 16KB page size support for Google Play compatibility
+        jniLibs {
+            useLegacyPackaging = false
+        }
+    }
+
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.zet_gestor_orcamento"
+        applicationId = "br.zet.gestororcamento"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        multiDexEnabled = true
     }
 
     signingConfigs {
@@ -61,8 +74,15 @@ android {
 
     buildTypes {
         release {
-            // Assina com a keystore de release se disponível, senão usa debug para desenvolvimento
-            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
+            // You need to create a signing configuration to build for release.
+            // See https://flutter.dev/to/android-signing for instructions.
+            signingConfig = if (keystoreProperties.isNotEmpty()) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
 }
@@ -73,4 +93,5 @@ flutter {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+    implementation("androidx.appcompat:appcompat:1.6.1")
 }

@@ -1,13 +1,13 @@
 // reports_screen.dart - Tela de relatórios
 import 'package:flutter/material.dart';
-import 'package:zet_gestor_orcamento/components/base_components.dart';
-import 'package:zet_gestor_orcamento/components/lazy_charts.dart';
-import 'package:zet_gestor_orcamento/repository/bank_slip_repository.dart';
-import 'package:zet_gestor_orcamento/models/bank_slip.dart';
-import 'package:zet_gestor_orcamento/models/category.dart';
+import 'package:zeitune_gestor/components/base_components.dart';
+import 'package:zeitune_gestor/components/lazy_charts.dart';
+import 'package:zeitune_gestor/repository/bank_slip_repository.dart';
+import 'package:zeitune_gestor/models/bank_slip.dart';
+import 'package:zeitune_gestor/models/category.dart';
 import 'package:intl/intl.dart';
-import 'package:zet_gestor_orcamento/repository/settings_repository.dart';
-import 'package:zet_gestor_orcamento/repository/budget_repository.dart';
+import 'package:zeitune_gestor/repository/settings_repository.dart';
+import 'package:zeitune_gestor/repository/budget_repository.dart';
 
 class ReportsScreen extends StatefulWidget {
   const ReportsScreen({super.key});

@@ -1,8 +1,8 @@
-name: zet_gestor_orcamento
-description: Gestor de orcamento
+name: zeitune_gestor
+description: "Zeitune Gestor - Aplicativo para controle de orçamento pessoal"
 publish_to: 'none'
 
-version: 2.0.0+2
+version: 2.0.0+6
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -27,7 +27,7 @@ dependencies:
   glassmorphism: ^3.0.0
   smooth_page_indicator: ^1.2.0+3
   flutter_animate: ^4.5.0
-  material_color_utilities: ^0.11.1
+  material_color_utilities: 0.13.0
   
   # Analytics & Export
   pdf: ^3.11.0
@@ -43,9 +43,9 @@ dependencies:
   shared_preferences: ^2.5.3
   visibility_detector: ^0.4.0+2
 
-  # Isar Database
-  isar: ^3.1.0
-  isar_flutter_libs: ^3.1.0
+  # Isar Database (community version com suporte 16KB e web)
+  isar_community: ^3.3.0
+  isar_community_flutter_libs: ^3.3.0
   flutter_bloc: ^9.1.1
   equatable: ^2.0.7
   bloc: ^9.0.1
@@ -59,7 +59,7 @@ dev_dependencies:
   
   # Code generation
   build_runner: ^2.4.9
-  isar_generator: ^3.1.0
+  isar_community_generator: ^3.3.0
 
 flutter:
   uses-material-design: true

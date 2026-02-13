@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zet_gestor_orcamento/bloc/settings/settings_event.dart';
-import 'package:zet_gestor_orcamento/bloc/settings/settings_state.dart';
-import 'package:zet_gestor_orcamento/repository/settings_repository.dart';
+import 'package:zeitune_gestor/bloc/settings/settings_event.dart';
+import 'package:zeitune_gestor/bloc/settings/settings_state.dart';
+import 'package:zeitune_gestor/repository/settings_repository.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final SettingsRepository repo;

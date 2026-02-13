@@ -12,7 +12,7 @@ class BudgetAlertService {
   static Future<void> initialize() async {
     try {
       const AndroidInitializationSettings initializationSettingsAndroid =
-          AndroidInitializationSettings('@mipmap/ic_launcher');
+          AndroidInitializationSettings('ic_launcher');
       
       const InitializationSettings initializationSettings =
           InitializationSettings(android: initializationSettingsAndroid);
@@ -39,7 +39,7 @@ class BudgetAlertService {
       await _checkCategoryBudgetAlerts(expenses, categories);
       
     } catch (e) {
-      print('Erro ao verificar alertas: $e');
+      // Silently handle errors in production
     }
   }
   
@@ -64,6 +64,9 @@ class BudgetAlertService {
     
     final totalSpent = currentMonthExpenses.fold(0.0, (sum, expense) => sum + (expense.value ?? 0));
     final budgetLimit = budget.salary ?? 0;
+    
+    if (budgetLimit <= 0) return;
+
     final percentage = (totalSpent / budgetLimit) * 100;
     
     // Alerta de 80% do orçamento
@@ -150,19 +153,19 @@ class BudgetAlertService {
     String body, {
     Importance importance = Importance.high,
   }) async {
-    // Remover parâmetro de importância padrão para evitar conflito
     try {
-      const AndroidNotificationDetails androidPlatformChannelSpecifics =
+      // Configurar detalhes da notificação
+      AndroidNotificationDetails androidPlatformChannelSpecifics =
           AndroidNotificationDetails(
         'budget_alerts_channel',
         'Alertas de Orçamento',
         channelDescription: 'Notificações sobre limites de orçamento',
-        importance: Importance.max,
-    priority: Priority.high,
-    ticker: 'ticker',
-  );
+        importance: importance,
+        priority: Priority.high,
+        ticker: 'ticker',
+      );
       
-      const NotificationDetails platformChannelSpecifics =
+      NotificationDetails platformChannelSpecifics =
           NotificationDetails(android: androidPlatformChannelSpecifics);
       
       await _notifications.show(
@@ -172,7 +175,7 @@ class BudgetAlertService {
         platformChannelSpecifics,
       );
     } catch (e) {
-      print('Erro ao mostrar notificação: $e');
+      // Silently handle errors in production
     }
   }
   

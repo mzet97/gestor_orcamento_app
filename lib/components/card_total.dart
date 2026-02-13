@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zet_gestor_orcamento/bloc/budget/budget_bloc.dart';
-import 'package:zet_gestor_orcamento/bloc/budget/budget_event.dart';
-import 'package:zet_gestor_orcamento/bloc/budget/budget_state.dart';
-import 'package:zet_gestor_orcamento/models/budget.dart';
+import 'package:zeitune_gestor/bloc/budget/budget_bloc.dart';
+import 'package:zeitune_gestor/bloc/budget/budget_event.dart';
+import 'package:zeitune_gestor/bloc/budget/budget_state.dart';
+import 'package:zeitune_gestor/models/budget.dart';
 
 class CardTotal extends StatefulWidget {
   final BuildContext appContext;

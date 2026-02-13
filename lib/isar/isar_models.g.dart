@@ -41,7 +41,7 @@ const BudgetIsarSchema = CollectionSchema(
   getId: _budgetIsarGetId,
   getLinks: _budgetIsarGetLinks,
   attach: _budgetIsarAttach,
-  version: '3.1.0+1',
+  version: '3.3.0',
 );
 
 int _budgetIsarEstimateSize(
@@ -476,7 +476,7 @@ const MonthlyBudgetIsarSchema = CollectionSchema(
   getId: _monthlyBudgetIsarGetId,
   getLinks: _monthlyBudgetIsarGetLinks,
   attach: _monthlyBudgetIsarAttach,
-  version: '3.1.0+1',
+  version: '3.3.0',
 );
 
 int _monthlyBudgetIsarEstimateSize(
@@ -1216,7 +1216,7 @@ const BankSlipIsarSchema = CollectionSchema(
   getId: _bankSlipIsarGetId,
   getLinks: _bankSlipIsarGetLinks,
   attach: _bankSlipIsarAttach,
-  version: '3.1.0+1',
+  version: '3.3.0',
 );
 
 int _bankSlipIsarEstimateSize(
@@ -2534,7 +2534,7 @@ const CategoryIsarSchema = CollectionSchema(
   getId: _categoryIsarGetId,
   getLinks: _categoryIsarGetLinks,
   attach: _categoryIsarAttach,
-  version: '3.1.0+1',
+  version: '3.3.0',
 );
 
 int _categoryIsarEstimateSize(
@@ -3551,7 +3551,7 @@ const AppSettingIsarSchema = CollectionSchema(
   getId: _appSettingIsarGetId,
   getLinks: _appSettingIsarGetLinks,
   attach: _appSettingIsarAttach,
-  version: '3.1.0+1',
+  version: '3.3.0',
 );
 
 int _appSettingIsarEstimateSize(

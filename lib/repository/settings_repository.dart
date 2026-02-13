@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zet_gestor_orcamento/database/isar_database.dart';
+import 'package:zeitune_gestor/database/isar_database.dart';
 
 class SettingsRepository {
   static const String keyDateFormat = 'date_format';

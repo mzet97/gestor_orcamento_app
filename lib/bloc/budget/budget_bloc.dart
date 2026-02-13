@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zet_gestor_orcamento/bloc/budget/budget_event.dart';
-import 'package:zet_gestor_orcamento/bloc/budget/budget_state.dart';
-import 'package:zet_gestor_orcamento/repository/budget_repository.dart';
+import 'package:zeitune_gestor/bloc/budget/budget_event.dart';
+import 'package:zeitune_gestor/bloc/budget/budget_state.dart';
+import 'package:zeitune_gestor/repository/budget_repository.dart';
 
 class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
   final BudgetRepository _budgetRepository;

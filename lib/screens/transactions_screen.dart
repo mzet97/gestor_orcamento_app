@@ -1,14 +1,13 @@
 // transactions_screen.dart - Tela de transações
 import 'package:flutter/material.dart';
-import 'package:zet_gestor_orcamento/components/base_components.dart';
-import 'package:zet_gestor_orcamento/models/transaction.dart';
-import 'package:zet_gestor_orcamento/models/category.dart';
-import 'package:zet_gestor_orcamento/repository/bank_slip_repository.dart';
+import 'package:zeitune_gestor/components/base_components.dart';
+import 'package:zeitune_gestor/models/transaction.dart';
+import 'package:zeitune_gestor/models/category.dart';
+import 'package:zeitune_gestor/repository/bank_slip_repository.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:zet_gestor_orcamento/models/bank_slip.dart';
-import 'package:zet_gestor_orcamento/database/isar_database.dart';
-import 'package:zet_gestor_orcamento/screens/expense_form_screen.dart';
-import 'package:zet_gestor_orcamento/test_agendamentos.dart' as test_agendamentos;
+import 'package:zeitune_gestor/models/bank_slip.dart';
+import 'package:zeitune_gestor/database/isar_database.dart';
+import 'package:zeitune_gestor/screens/expense_form_screen.dart';
 
 class TransactionsScreen extends StatefulWidget {
   const TransactionsScreen({super.key});

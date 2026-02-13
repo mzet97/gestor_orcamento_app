@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Define android:lStar attribute to fix isar_flutter_libs compatibility -->
+    <attr name="lStar" format="float" />
+</resources>

@@ -1,0 +1,14 @@
+afterEvaluate {
+    tasks.each { task ->
+        if (task.name == 'processReleaseResources' || task.name == 'processDebugResources') {
+            task.doFirst {
+                def valuesFile = file("${buildDir}/intermediates/merged_res/release/values/values.xml")
+                if (valuesFile.exists()) {
+                    def content = valuesFile.text
+                    content = content.replaceAll('android:lStar', 'lStar')
+                    valuesFile.text = content
+                }
+            }
+        }
+    }
+}

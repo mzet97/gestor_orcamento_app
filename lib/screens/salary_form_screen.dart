@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zet_gestor_orcamento/bloc/budget/budget_bloc.dart';
-import 'package:zet_gestor_orcamento/bloc/budget/budget_event.dart';
-import 'package:zet_gestor_orcamento/bloc/budget/budget_state.dart';
-import 'package:zet_gestor_orcamento/components/base_components.dart';
+import 'package:zeitune_gestor/bloc/budget/budget_bloc.dart';
+import 'package:zeitune_gestor/bloc/budget/budget_event.dart';
+import 'package:zeitune_gestor/bloc/budget/budget_state.dart';
+import 'package:zeitune_gestor/components/base_components.dart';
 
 class SalaryFormScreen extends StatefulWidget {
   const SalaryFormScreen({super.key});

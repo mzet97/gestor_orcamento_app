@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:zet_gestor_orcamento/models/bank_slip.dart';
+import 'package:zeitune_gestor/models/bank_slip.dart';
 
 abstract class BankSlipEvent extends Equatable {
   const BankSlipEvent();

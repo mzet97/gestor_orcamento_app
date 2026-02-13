@@ -431,7 +431,7 @@ class _CachedNetworkImageState extends State<CachedNetworkImage> {
 
   // Método estático para limpar todo o cache
   static void clearCache() {
-    _imageCache.clear();
-    _accessCounts.clear();
+    _networkCache.clear();
+    _cacheTimestamps.clear();
   }
 }

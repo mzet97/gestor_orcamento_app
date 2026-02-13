@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:zet_gestor_orcamento/models/category.dart';
+import 'package:zeitune_gestor/models/category.dart';
 
 abstract class CategoryEvent extends Equatable {
   const CategoryEvent();

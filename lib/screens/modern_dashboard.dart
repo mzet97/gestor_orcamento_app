@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:zet_gestor_orcamento/bloc/budget/budget_bloc.dart';
-import 'package:zet_gestor_orcamento/bloc/budget/budget_event.dart';
-import 'package:zet_gestor_orcamento/bloc/budget/budget_state.dart';
-import 'package:zet_gestor_orcamento/models/budget.dart';
-import 'package:zet_gestor_orcamento/models/bank_slip.dart';
-import 'package:zet_gestor_orcamento/models/monthly_budget.dart';
-import 'package:zet_gestor_orcamento/components/modern_card.dart';
-import 'package:zet_gestor_orcamento/components/lazy_charts.dart';
-import 'package:zet_gestor_orcamento/core/accessibility.dart';
-import 'package:zet_gestor_orcamento/screens/expense_form_screen.dart';
-import 'package:zet_gestor_orcamento/screens/monthly_budget_form_screen.dart';
-import 'package:zet_gestor_orcamento/screens/transactions_screen.dart';
-import 'package:zet_gestor_orcamento/screens/analytics_screen.dart';
-import 'package:zet_gestor_orcamento/models/category.dart';
-import 'package:zet_gestor_orcamento/repository/bank_slip_repository.dart';
-import 'package:zet_gestor_orcamento/repository/settings_repository.dart';
-import 'package:zet_gestor_orcamento/components/base_components.dart';
+import 'package:zeitune_gestor/bloc/budget/budget_bloc.dart';
+import 'package:zeitune_gestor/bloc/budget/budget_event.dart';
+import 'package:zeitune_gestor/bloc/budget/budget_state.dart';
+import 'package:zeitune_gestor/models/budget.dart';
+import 'package:zeitune_gestor/models/bank_slip.dart';
+import 'package:zeitune_gestor/models/monthly_budget.dart';
+import 'package:zeitune_gestor/components/modern_card.dart';
+import 'package:zeitune_gestor/components/lazy_charts.dart';
+import 'package:zeitune_gestor/core/accessibility.dart';
+import 'package:zeitune_gestor/screens/expense_form_screen.dart';
+import 'package:zeitune_gestor/screens/monthly_budget_form_screen.dart';
+import 'package:zeitune_gestor/screens/transactions_screen.dart';
+import 'package:zeitune_gestor/screens/analytics_screen.dart';
+import 'package:zeitune_gestor/models/category.dart';
+import 'package:zeitune_gestor/repository/bank_slip_repository.dart';
+import 'package:zeitune_gestor/repository/settings_repository.dart';
+import 'package:zeitune_gestor/components/base_components.dart';
 
 class ModernDashboard extends StatefulWidget {
   const ModernDashboard({Key? key}) : super(key: key);
@@ -108,9 +108,10 @@ class _ModernDashboardState extends State<ModernDashboard>
                       flexibleSpace: FlexibleSpaceBar(
                         titlePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                         title: Semantics(
-                          label: 'Zet Gestor - Seu orçamento mensal',
+                          label: 'Zeitune Gestor - Seu orçamento mensal',
                           header: true,
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
                                 width: 40,
@@ -137,7 +138,7 @@ class _ModernDashboardState extends State<ModernDashboard>
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    'Zet Gestor',
+                                    'Zeitune Gestor',
                                     style: theme.textTheme.titleLarge?.copyWith(
                                       fontWeight: FontWeight.w700,
                                       color: theme.colorScheme.onBackground,

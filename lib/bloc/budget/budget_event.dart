@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:zet_gestor_orcamento/models/monthly_budget.dart';
-import 'package:zet_gestor_orcamento/models/bank_slip.dart';
+import 'package:zeitune_gestor/models/monthly_budget.dart';
+import 'package:zeitune_gestor/models/bank_slip.dart';
 
 abstract class BudgetEvent extends Equatable {
   const BudgetEvent();

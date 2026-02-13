@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zet_gestor_orcamento/bloc/monthly_budget/monthly_budget_event.dart';
-import 'package:zet_gestor_orcamento/bloc/monthly_budget/monthly_budget_state.dart';
-import 'package:zet_gestor_orcamento/repository/monthly_budget_repository.dart';
+import 'package:zeitune_gestor/bloc/monthly_budget/monthly_budget_event.dart';
+import 'package:zeitune_gestor/bloc/monthly_budget/monthly_budget_state.dart';
+import 'package:zeitune_gestor/repository/monthly_budget_repository.dart';
 
 class MonthlyBudgetBloc extends Bloc<MonthlyBudgetEvent, MonthlyBudgetState> {
   final MonthlyBudgetRepository repo;

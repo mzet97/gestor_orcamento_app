@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zet_gestor_orcamento/bloc/bank_slip/bank_slip_event.dart';
-import 'package:zet_gestor_orcamento/bloc/bank_slip/bank_slip_state.dart';
-import 'package:zet_gestor_orcamento/repository/bank_slip_repository.dart';
-import 'package:zet_gestor_orcamento/models/bank_slip.dart';
+import 'package:zeitune_gestor/bloc/bank_slip/bank_slip_event.dart';
+import 'package:zeitune_gestor/bloc/bank_slip/bank_slip_state.dart';
+import 'package:zeitune_gestor/repository/bank_slip_repository.dart';
+import 'package:zeitune_gestor/models/bank_slip.dart';
 
 class BankSlipBloc extends Bloc<BankSlipEvent, BankSlipState> {
   final BankSlipRepository repo;

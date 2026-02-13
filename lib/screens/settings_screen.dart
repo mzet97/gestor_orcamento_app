@@ -1,16 +1,16 @@
 // settings_screen.dart - Tela de configurações
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zet_gestor_orcamento/components/base_components.dart';
-import 'package:zet_gestor_orcamento/repository/settings_repository.dart';
-import 'package:zet_gestor_orcamento/bloc/settings/settings_bloc.dart';
-import 'package:zet_gestor_orcamento/bloc/settings/settings_state.dart';
-import 'package:zet_gestor_orcamento/bloc/settings/settings_event.dart';
-import 'package:zet_gestor_orcamento/screens/salary_form_screen.dart';
-import 'package:zet_gestor_orcamento/services/export_service.dart';
-import 'package:zet_gestor_orcamento/repository/budget_repository.dart';
-import 'package:zet_gestor_orcamento/repository/bank_slip_repository.dart';
-import 'package:zet_gestor_orcamento/l10n/app_localizations.dart';
+import 'package:zeitune_gestor/components/base_components.dart';
+import 'package:zeitune_gestor/repository/settings_repository.dart';
+import 'package:zeitune_gestor/bloc/settings/settings_bloc.dart';
+import 'package:zeitune_gestor/bloc/settings/settings_state.dart';
+import 'package:zeitune_gestor/bloc/settings/settings_event.dart';
+import 'package:zeitune_gestor/screens/salary_form_screen.dart';
+import 'package:zeitune_gestor/services/export_service.dart';
+import 'package:zeitune_gestor/repository/budget_repository.dart';
+import 'package:zeitune_gestor/repository/bank_slip_repository.dart';
+import 'package:zeitune_gestor/l10n/app_localizations.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -95,7 +95,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Usuário Zet',
+                            'Perfil Zeitune',
                             style: theme.textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -583,7 +583,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: const Text('Termos de Uso'),
         content: const SingleChildScrollView(
           child: Text(
-            'Termos e condições de uso do aplicativo Zet Gestor de Orçamento...\n\n'
+            'Termos e condições de uso do aplicativo Zeitune Gestor de Orçamento...\n\n'
             '1. Aceitação dos Termos\n'
             'Ao utilizar este aplicativo, você concorda com estes termos.\n\n'
             '2. Uso do Serviço\n'
@@ -611,7 +611,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: const Text('Política de Privacidade'),
         content: const SingleChildScrollView(
           child: Text(
-            'Política de privacidade do aplicativo Zet Gestor de Orçamento...\n\n'
+            'Política de privacidade do aplicativo Zeitune Gestor de Orçamento...\n\n'
             '1. Coleta de Dados\n'
             'Coletamos apenas dados necessários para funcionamento do app.\n\n'
             '2. Uso dos Dados\n'

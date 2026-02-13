@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zet_gestor_orcamento/bloc/category/category_event.dart';
-import 'package:zet_gestor_orcamento/bloc/category/category_state.dart';
-import 'package:zet_gestor_orcamento/repository/bank_slip_repository.dart';
+import 'package:zeitune_gestor/bloc/category/category_event.dart';
+import 'package:zeitune_gestor/bloc/category/category_state.dart';
+import 'package:zeitune_gestor/repository/bank_slip_repository.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final BankSlipRepository repo;

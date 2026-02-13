@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zet_gestor_orcamento/components/menu_header.dart';
-import 'package:zet_gestor_orcamento/screens/monthly_budget_form_Screen.dart';
-import 'package:zet_gestor_orcamento/screens/expense_form_screen.dart';
+import 'package:zeitune_gestor/components/menu_header.dart';
+import 'package:zeitune_gestor/screens/monthly_budget_form_Screen.dart';
+import 'package:zeitune_gestor/screens/expense_form_screen.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({
@@ -60,7 +60,7 @@ class MenuDrawer extends StatelessWidget {
             ),
             applicationName: 'Gestor Orcamento',
             applicationVersion: '0.0.1',
-            applicationLegalese: 'mzet1997© 2023 Company',
+            applicationLegalese: 'Matheus Zeitune DEV© 2025',
             aboutBoxChildren: [
               Padding(
                 padding: EdgeInsets.all(8.0),

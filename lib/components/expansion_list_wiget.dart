@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zet_gestor_orcamento/bloc/budget/budget_bloc.dart';
-import 'package:zet_gestor_orcamento/bloc/budget/budget_event.dart';
-import 'package:zet_gestor_orcamento/bloc/budget/budget_state.dart';
-import 'package:zet_gestor_orcamento/models/budget.dart';
-import 'package:zet_gestor_orcamento/models/bank_slip.dart';
-import 'package:zet_gestor_orcamento/models/monthly_budget.dart';
+import 'package:zeitune_gestor/bloc/budget/budget_bloc.dart';
+import 'package:zeitune_gestor/bloc/budget/budget_event.dart';
+import 'package:zeitune_gestor/bloc/budget/budget_state.dart';
+import 'package:zeitune_gestor/models/budget.dart';
+import 'package:zeitune_gestor/models/bank_slip.dart';
+import 'package:zeitune_gestor/models/monthly_budget.dart';
 
 class ExpansionListWiget extends StatefulWidget {
   final BuildContext appContext;
@@ -49,7 +49,6 @@ class _ExpansionListWigetState extends State<ExpansionListWiget> {
             expansionCallback: (int index, bool isExpanded) {
               setState(() {
                 // budget?.monthlyBudget?[index].isExpanded = !isExpanded;
-                // print(isExpanded);
               });
             },
             children: getMonthlyBudgetWidget(budget?.monthlyBudget),
@@ -66,7 +65,6 @@ class _ExpansionListWigetState extends State<ExpansionListWiget> {
 
     if (list != null && list.isNotEmpty) {
       for (MonthlyBudget monthlyBudget in list) {
-        print('monthlyBudget: $monthlyBudget');
         exp.add(ExpansionPanel(
           backgroundColor: Colors.green[200],
           headerBuilder: (BuildContext context, bool isExpanded) {
@@ -97,7 +95,6 @@ class _ExpansionListWigetState extends State<ExpansionListWiget> {
 
     if(bankSilps != null && bankSilps.isNotEmpty){
       for(BankSlip bankSlip in bankSilps){
-        print('bankSlip: $bankSlip');
         childs.add(Container(
           color: Colors.amber[100],
           padding: EdgeInsets.only(left: 10, right: 10, bottom: 5, top: 5),

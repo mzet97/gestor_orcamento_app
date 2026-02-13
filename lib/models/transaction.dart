@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zet_gestor_orcamento/models/category.dart';
+import 'package:zeitune_gestor/models/category.dart';
 
 enum TransactionType { income, expense }
 

@@ -3,11 +3,11 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zet_gestor_orcamento/database/isar_database.dart';
-import 'package:zet_gestor_orcamento/models/bank_slip.dart';
-import 'package:zet_gestor_orcamento/models/category.dart';
-import 'package:zet_gestor_orcamento/models/monthly_budget.dart';
-import 'package:zet_gestor_orcamento/repository/monthly_budget_repository.dart';
+import 'package:zeitune_gestor/database/isar_database.dart';
+import 'package:zeitune_gestor/models/bank_slip.dart';
+import 'package:zeitune_gestor/models/category.dart';
+import 'package:zeitune_gestor/models/monthly_budget.dart';
+import 'package:zeitune_gestor/repository/monthly_budget_repository.dart';
 
 class BankSlipRepository {
   static const String _prefsKeySlips = 'bank_slips';

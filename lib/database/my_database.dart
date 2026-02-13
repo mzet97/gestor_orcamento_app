@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:zet_gestor_orcamento/models/bank_slip.dart';
-import 'package:zet_gestor_orcamento/models/budget.dart';
-import 'package:zet_gestor_orcamento/models/category.dart';
-import 'package:zet_gestor_orcamento/models/monthly_budget.dart';
+import 'package:zeitune_gestor/models/bank_slip.dart';
+import 'package:zeitune_gestor/models/budget.dart';
+import 'package:zeitune_gestor/models/category.dart';
+import 'package:zeitune_gestor/models/monthly_budget.dart';
 
 Future<Database> getDatabase() async {
   final String path = join(await getDatabasesPath(), 'task.db');
@@ -77,7 +77,6 @@ class MyDatabase {
     Database dbBudget = await db;
     int id = await dbBudget
         .rawInsert('INSERT INTO budget(salary) VALUES(?);', [budget.salary]);
-    print('idBudget: $id');
     budget.id = id;
 
     return budget;
@@ -98,10 +97,8 @@ class MyDatabase {
           var monthlyBudges = await getAllByBudgetMonthlyBudget(budget.id!);
           budget.monthlyBudget = monthlyBudges;
         } catch (e) {
-          print("faied to save to commit BRECASE ==> ${e.toString()}");
         }
 
-        print('budget: $budget');
       }
     }
 
@@ -113,7 +110,6 @@ class MyDatabase {
     int count = await dbBudget.rawUpdate(
         'UPDATE budget SET salary = ? WHERE id = ?',
         [budget.salary, budget.id]);
-    print('update:$count');
     return budget;
   }
 
@@ -125,7 +121,6 @@ class MyDatabase {
     int id = await dbBudget.rawInsert(
         'INSERT INTO monthly_budget(month, year, id_budget) VALUES(?,?,?);',
         [monthlyBudget.month, monthlyBudget.year, budget.id]);
-    print('idBudget: $id');
     monthlyBudget.id = id;
 
     return monthlyBudget;
@@ -148,10 +143,8 @@ class MyDatabase {
           var bankSlip = await getAllByMonthlyBudgetBankSlip(monthlyBudget.id!);
           monthlyBudget.bankSilps = bankSlip;
         } catch (e) {
-          print("faied to save to commit BRECASE ==> ${e.toString()}");
         }
 
-        print('$monthlyBudget');
       }
     }
 
@@ -175,9 +168,7 @@ class MyDatabase {
           var bankSlip = await getAllByMonthlyBudgetBankSlip(monthlyBudget.id!);
           monthlyBudget.bankSilps = bankSlip;
         } catch (e) {
-          print("faied to save to commit BRECASE ==> ${e.toString()}");
         }
-        print('$monthlyBudget');
       }
     }
 
@@ -198,12 +189,10 @@ class MyDatabase {
           var bankSlip = await getAllByMonthlyBudgetBankSlip(monthlyBudget.id!);
           monthlyBudget.bankSilps = bankSlip;
         } catch (e) {
-          print("faied to save to commit BRECASE ==> ${e.toString()}");
         }
 
         listMonthlyBudget.add(monthlyBudget);
 
-        print('$monthlyBudget');
       }
     }
 
@@ -225,12 +214,10 @@ class MyDatabase {
           var bankSlip = await getAllByMonthlyBudgetBankSlip(monthlyBudget.id!);
           monthlyBudget.bankSilps = bankSlip;
         } catch (e) {
-          print("faied to save to commit BRECASE ==> ${e.toString()}");
         }
 
         listMonthlyBudget.add(monthlyBudget);
 
-        print('$monthlyBudget');
       }
     }
 
@@ -245,7 +232,6 @@ class MyDatabase {
           monthlyBudget.month!, monthlyBudget.year!);
       if (monthlyBudgetDB == null) return false;
     } catch (e) {
-      print("faied to save to commit BRECASE ==> ${e.toString()}");
     }
 
     return true;
@@ -256,7 +242,6 @@ class MyDatabase {
     int count = await dbBudget.rawUpdate(
         'UPDATE monthly_budget SET month = ?, year = ? WHERE id = ?',
         [monthlyBudget.month, monthlyBudget.year, monthlyBudget.id]);
-    print('update:$count');
 
     return monthlyBudget;
   }
@@ -272,7 +257,6 @@ class MyDatabase {
 
     int count = await dbBudget.rawDelete(
         'DELETE FROM monthly_budget WHERE id = ?', [monthlyBudget.id]);
-    print('update:$count');
   }
 
   Future<BankSlip?> saveBankSlip(BankSlip bankSlip, int idMonthlyBudget) async {
@@ -299,7 +283,6 @@ class MyDatabase {
       if (map != null && map.isNotEmpty) {
         bankSlip = BankSlip.formMap(map);
 
-        print('$bankSlip');
       }
     }
 
@@ -318,7 +301,6 @@ class MyDatabase {
 
         listBankSlip.add(bankSlip);
 
-        print('$bankSlip');
       }
     }
 
@@ -337,7 +319,6 @@ class MyDatabase {
         var bankSlip = BankSlip.formMap(map);
         listBankSlip.add(bankSlip);
 
-        print('_db:$bankSlip');
       }
     }
 
@@ -427,7 +408,6 @@ class MyDatabase {
       
       return category.copyWith(id: id);
     } catch (e) {
-      print('Erro ao salvar categoria: $e');
       return null;
     }
   }
@@ -450,7 +430,6 @@ class MyDatabase {
       
       return category;
     } catch (e) {
-      print('Erro ao atualizar categoria: $e');
       return null;
     }
   }

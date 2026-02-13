@@ -2,10 +2,10 @@
 // On web, repositories use SharedPreferences, so these methods are rarely called.
 
 import 'package:flutter/material.dart';
-import 'package:zet_gestor_orcamento/models/bank_slip.dart';
-import 'package:zet_gestor_orcamento/models/category.dart' as app;
-import 'package:zet_gestor_orcamento/models/budget.dart';
-import 'package:zet_gestor_orcamento/models/monthly_budget.dart';
+import 'package:zeitune_gestor/models/bank_slip.dart';
+import 'package:zeitune_gestor/models/category.dart' as app;
+import 'package:zeitune_gestor/models/budget.dart';
+import 'package:zeitune_gestor/models/monthly_budget.dart';
 
 class IsarDatabase {
   // -------- Budget --------

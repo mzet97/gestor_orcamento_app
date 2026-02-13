@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:zet_gestor_orcamento/isar/isar_models.dart';
-import 'package:zet_gestor_orcamento/models/budget.dart';
-import 'package:zet_gestor_orcamento/models/monthly_budget.dart';
-import 'package:zet_gestor_orcamento/models/bank_slip.dart';
-import 'package:zet_gestor_orcamento/models/category.dart' as app;
+import 'package:zeitune_gestor/isar/isar_models.dart';
+import 'package:zeitune_gestor/models/budget.dart';
+import 'package:zeitune_gestor/models/monthly_budget.dart';
+import 'package:zeitune_gestor/models/bank_slip.dart';
+import 'package:zeitune_gestor/models/category.dart' as app;
 
 class IsarDatabase {
   static final IsarDatabase _instance = IsarDatabase._internal();
